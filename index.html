@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vé Số Xuyên Không</title>
+    <meta name="description" content="Tra cứu xem số vé số của bạn đã từng trúng giải nào trong lịch sử chưa. Đúng số, sai thời điểm?">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Background Overlay -->
+    <div class="bg-pattern"></div>
+
+    <div class="app-container">
+        <!-- ======================== HEADER ======================== -->
+        <header class="header">
+            <div class="header__icon">🎰</div>
+            <h1 class="header__title">Vé Số Xuyên Không</h1>
+            <p class="header__subtitle"><em>"Đúng số, sai thời điểm"</em></p>
+        </header>
+
+        <!-- ======================== SEARCH ======================== -->
+        <section class="search-section">
+            <div class="search-card">
+                <div class="search-input-group">
+                    <label>Nhập 6 chữ số trên vé số của bạn</label>
+                    <div class="search-input-wrapper">
+                        <input
+                            type="text"
+                            id="ticketInput"
+                            class="search-input"
+                            placeholder="067245"
+                            maxlength="6"
+                            inputmode="numeric"
+                            pattern="[0-9]*"
+                            autocomplete="off"
+                        >
+                        <button type="button" id="searchBtn" class="search-btn">🔍 Dò vé</button>
+                    </div>
+                </div>
+
+                <div class="search-options">
+                    <label>Vùng miền:</label>
+                    <div class="region-filters">
+                        <span class="region-chip active" data-region="mn">Miền Nam</span>
+                        <span class="region-chip active" data-region="mt">Miền Trung</span>
+                        <span class="region-chip active" data-region="mb">Miền Bắc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================== LOADING ======================== -->
+        <div id="loader" class="loader">
+            <div class="spinner"></div>
+            <p>Đang tra cứu lịch sử xổ số...</p>
+        </div>
+
+        <!-- ======================== RESULTS ======================== -->
+        <section id="resultsSection" class="results-section">
+            <!-- Jackpot Alert -->
+            <div id="jackpotAlert" class="jackpot-alert"></div>
+
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <p class="stat-item__value gold" id="statTotalMatch">0</p>
+                    <p class="stat-item__label">Lần trúng</p>
+                </div>
+                <div class="stat-item">
+                    <p class="stat-item__value green" id="statBestPrize">—</p>
+                    <p class="stat-item__label">Giải cao nhất</p>
+                </div>
+                <div class="stat-item">
+                    <p class="stat-item__value blue" id="statBestValue">—</p>
+                    <p class="stat-item__label">Giá trị cao nhất</p>
+                </div>
+            </div>
+
+            <!-- Summary Banner -->
+            <div class="summary-banner">
+                <div class="summary-icon">⏳</div>
+                <div class="summary-text">
+                    <h3>Kết quả dò vé: <span id="summaryNumber"></span></h3>
+                    <p id="summaryDesc"></p>
+                </div>
+            </div>
+
+            <!-- Prize Tier List (dynamically rendered) -->
+            <div id="prizeTierListContainer" class="prize-tier-list"></div>
+        </section>
+
+        <!-- ======================== FOOTER ======================== -->
+        <footer class="footer">
+            <p>Dữ liệu từ <a href="https://xskt.com.vn" target="_blank">xskt.com.vn</a> · Vé Số May Mắn © 2026</p>
+        </footer>
+    </div>
+
+    <!-- ======================== JAVASCRIPT ======================== -->
+    <script src="/static/script.js"></script>
+</body>
+</html>
