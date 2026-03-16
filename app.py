@@ -17,8 +17,12 @@ from settings import LotteryConfig, BASE_DIR
 # ============================================================================
 @contextmanager
 def get_db():
-    """Thread-safe database connection context manager."""
-    conn = sqlite3.connect(LotteryConfig.DB_FILE)
+    try:
+        db_uri = f"file:{os.path.abspath(LotteryConfig.DB_FILE)}?mode=ro"
+        conn = sqlite3.connect(db_uri, uri=True)
+    except sqlite3.OperationalError:
+        conn = sqlite3.connect(LotteryConfig.DB_FILE)
+
     conn.row_factory = sqlite3.Row
     try:
         yield conn
@@ -43,10 +47,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-os.makedirs(os.path.join(BASE_DIR, "static"), exist_ok=True)
-os.makedirs(os.path.join(BASE_DIR, "images"), exist_ok=True)
-app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
-app.mount("/images", StaticFiles(directory=os.path.join(BASE_DIR, "images")), name="images")
+try:
+    os.makedirs(os.path.join(BASE_DIR, "static"), exist_ok=True)
+    os.makedirs(os.path.join(BASE_DIR, "images"), exist_ok=True)
+except OSError:
+    pass
+
+if os.path.exists(os.path.join(BASE_DIR, "static")):
+    app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
+
+if os.path.exists(os.path.join(BASE_DIR, "images")):
+    app.mount("/images", StaticFiles(directory=os.path.join(BASE_DIR, "images")), name="images")
 
 
 # ============================================================================
