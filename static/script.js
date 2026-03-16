@@ -203,7 +203,7 @@
         document.getElementById('resultsSection').classList.remove('visible');
 
         try {
-            const response = await fetch('http://localhost:8000/api/check', {
+            const response = await fetch('/api/check', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ number, regions }),
